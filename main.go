@@ -3,11 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/url"
 	"os"
-    "path/filepath"
-	"io/ioutil"
+	"path/filepath"
 )
 
 func getnsps(path string, extention string) (files []string) {
@@ -38,12 +38,12 @@ func main() {
 	}
 	path := os.Args[1]
 	directories := []string{}
-    // Generate a list with all files    
-    files := getnsps(path, ".nsp")
+	// Generate a list with all files
+	files := getnsps(path, ".nsp")
 
 	webpage := "http://192.168.178.7:2480/"
 
-    // transform paths/files to a url query
+	// transform paths/files to a url query
 	for i, s := range files {
 		files[i] = webpage + url.QueryEscape(s)
 	}
@@ -56,9 +56,9 @@ func main() {
 	jsonData, err := json.Marshal(indexFile)
 	if err != nil {
 		log.Println(err)
-    }
-    // dump file
-    _ = ioutil.WriteFile("index.tfl", jsonData, 0644)
+	}
+	// dump file
+	_ = ioutil.WriteFile("index.tfl", jsonData, 0644)
 
 	// fmt.Println(string(jsonData))
 }
