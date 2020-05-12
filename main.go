@@ -27,23 +27,29 @@ func getnsps(path string, extention string) (files []string) {
 
 type NspLinkIndex struct {
 	Files       []string
-	Directories int
+	Directories []string
 }
 
 func main() {
-	files := getnsps(".", ".go")
-	fmt.Println(files)
+	if len(os.Args) != 2 {
+		fmt.Println("Usage:", os.Args[0], "[(relative)PATH]")
+		return
+	}
+	path := os.Args[1]
+	directories := []string{}
+    // Generate a list with all files    
+    files := getnsps(path, ".go")
 
 	webpage := "http://192.168.178.7:2480/"
 
+    // transform paths/files to a url query
 	for i, s := range files {
 		files[i] = webpage + url.QueryEscape(s)
-		fmt.Println(files)
 	}
 
 	indexFile := NspLinkIndex{
 		Files:       files,
-		Directories: 1,
+		Directories: directories,
 	}
 	var jsonData []byte
 	jsonData, err := json.Marshal(indexFile)
