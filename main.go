@@ -6,7 +6,8 @@ import (
 	"log"
 	"net/url"
 	"os"
-	"path/filepath"
+    "path/filepath"
+	"io/ioutil"
 )
 
 func getnsps(path string, extention string) (files []string) {
@@ -38,7 +39,7 @@ func main() {
 	path := os.Args[1]
 	directories := []string{}
     // Generate a list with all files    
-    files := getnsps(path, ".go")
+    files := getnsps(path, ".nsp")
 
 	webpage := "http://192.168.178.7:2480/"
 
@@ -55,6 +56,9 @@ func main() {
 	jsonData, err := json.Marshal(indexFile)
 	if err != nil {
 		log.Println(err)
-	}
-	fmt.Println(string(jsonData))
+    }
+    // dump file
+    _ = ioutil.WriteFile("index.tfl", jsonData, 0644)
+
+	// fmt.Println(string(jsonData))
 }
