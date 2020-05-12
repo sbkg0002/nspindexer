@@ -1,37 +1,37 @@
 package main
 
 import (
-	// "log"
+	"encoding/json"
 	"fmt"
+	"log"
 	"net/url"
 	"os"
 	"path/filepath"
 )
 
-func WalkMatch(root, pattern string) ([]string, error) {
-	var matches []string
+func getnsps(path string, extention string) (files []string) {
+
+	root := path
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if info.IsDir() {
+		if filepath.Ext(path) != extention {
 			return nil
 		}
-		if matched, err := filepath.Match(pattern, filepath.Base(path)); err != nil {
-			return err
-		} else if matched {
-			matches = append(matches, path)
-		}
+		files = append(files, path)
 		return nil
 	})
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	return matches, nil
+	return files
+}
+
+type NspLinkIndex struct {
+	Files       []string
+	Directories int
 }
 
 func main() {
-	files, _ := WalkMatch("/usr/src/", "*.go")
+	files := getnsps(".", ".go")
 	fmt.Println(files)
 
 	webpage := "http://192.168.178.7:2480/"
@@ -39,6 +39,16 @@ func main() {
 	for i, s := range files {
 		files[i] = webpage + url.QueryEscape(s)
 		fmt.Println(files)
-
 	}
+
+	indexFile := NspLinkIndex{
+		Files:       files,
+		Directories: 1,
+	}
+	var jsonData []byte
+	jsonData, err := json.Marshal(indexFile)
+	if err != nil {
+		log.Println(err)
+	}
+	fmt.Println(string(jsonData))
 }
