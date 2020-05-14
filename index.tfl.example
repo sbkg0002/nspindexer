@@ -1,1 +1,8 @@
-{"Files":["http://192.168.178.7:2480/data%2Ftest1%23%24.nsp","http://192.168.178.7:2480/data%2Ftest2%3F.nsp","http://192.168.178.7:2480/data%2Ftest3.nsp"],"Directories":[]}
+{
+    "Files": [
+        "http://192.168.178.7:2480/data%2Ftest1%23%24.nsp",
+        "http://192.168.178.7:2480/data%2Ftest2%3F.nsp",
+        "http://192.168.178.7:2480/data%2Ftest3.nsp"
+    ],
+    "Directories": []
+}

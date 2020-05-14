@@ -37,13 +37,16 @@ func main() {
 		Directories: directories,
 	}
 	var jsonData []byte
-	jsonData, err := json.Marshal(indexFile)
+	jsonData, err := json.MarshalIndent(indexFile, "", "    ")
 	if err != nil {
 		log.Println(err)
 	}
+
 	// dump file
-
-	_ = ioutil.WriteFile("index.tfl", jsonData, 0644)
-
-	fmt.Println("Written index.tfl:\n" + string(jsonData))
+	err = ioutil.WriteFile("index.tfl", jsonData, 0644)
+	if err != nil {
+		log.Println(err)
+	} else {
+		fmt.Println("Written index.tfl:\n" + string(jsonData))
+	}
 }
