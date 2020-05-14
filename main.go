@@ -3,28 +3,12 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/sbkg0002/nspindexer/getnsps"
 	"io/ioutil"
 	"log"
 	"net/url"
 	"os"
-	"path/filepath"
 )
-
-func getnsps(path string, extention string) (files []string) {
-
-	root := path
-	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-		if filepath.Ext(path) != extention {
-			return nil
-		}
-		files = append(files, path)
-		return nil
-	})
-	if err != nil {
-		panic(err)
-	}
-	return files
-}
 
 type NspLinkIndex struct {
 	Files       []string
@@ -39,7 +23,7 @@ func main() {
 	path := os.Args[1]
 	directories := []string{}
 	// Generate a list with all files
-	files := getnsps(path, ".nsp")
+	files := getnsps.ListAllNsps(path, ".nsp")
 
 	webpage := "http://192.168.178.7:2480/"
 
@@ -58,7 +42,8 @@ func main() {
 		log.Println(err)
 	}
 	// dump file
+
 	_ = ioutil.WriteFile("index.tfl", jsonData, 0644)
 
-	// fmt.Println(string(jsonData))
+	fmt.Println("Written index.tfl:\n" + string(jsonData))
 }
