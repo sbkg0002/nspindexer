@@ -14,11 +14,11 @@ type NspLinkIndex struct {
 }
 
 func writeIndexFile(serverip string, port string, path string) {
-	webpage := "http://" + serverip	 + port + "/"
+	webpage := "http://" + serverip + port + "/"
 	directories := []string{}
 
 	// Generate a list with all files
-	files := ListAllNsps(path + "/", ".nsp")
+	files := ListAllNsps(path+"/", ".nsp")
 
 	// transform paths/files to a url query
 	for i, s := range files {
@@ -36,7 +36,7 @@ func writeIndexFile(serverip string, port string, path string) {
 	}
 
 	// dump file
-	err = ioutil.WriteFile(path + "/index.tfl", jsonData, 0644)
+	err = ioutil.WriteFile(path+"/index.tfl", jsonData, 0644)
 	if err != nil {
 		fmt.Println("Got path: " + path)
 		log.Println(err)
