@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/sbkg0002/nspindexer/getnsps"
 	"io/ioutil"
 	"log"
 	"net/url"
@@ -23,7 +22,7 @@ func main() {
 	path := os.Args[1]
 	directories := []string{}
 	// Generate a list with all files
-	files := getnsps.ListAllNsps(path, ".nsp")
+	files := ListAllNsps(path, ".nsp")
 
 	webpage := "http://192.168.178.7:2480/"
 

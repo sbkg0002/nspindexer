@@ -1,4 +1,4 @@
-package getnsps
+package main
 
 import (
 	"os"
