@@ -3,6 +3,8 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"fmt"
+	"strings"
 )
 
 func ListAllNsps(path string, extention string) (files []string) {
@@ -12,7 +14,8 @@ func ListAllNsps(path string, extention string) (files []string) {
 		if filepath.Ext(path) != extention {
 			return nil
 		}
-		files = append(files, path)
+		// Add relative path from root
+		files = append(files, strings.Split(path, root)[1])
 		return nil
 	})
 	if err != nil {
