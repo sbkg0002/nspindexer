@@ -16,15 +16,14 @@ type NspLinkIndex struct {
 
 func main() {
 	if len(os.Args) != 2 {
-		fmt.Println("Usage:", os.Args[0], "[(relative)PATH]")
+		fmt.Println("Usage:", os.Args[0], "IP:PORT")
+		fmt.Println("Example:", os.Args[0], "192.168.178.7:2480")
 		return
 	}
-	path := os.Args[1]
+	webpage := "http://" + os.Args[1] +"/"
 	directories := []string{}
 	// Generate a list with all files
-	files := ListAllNsps(path, ".nsp")
-
-	webpage := "http://192.168.178.7:2480/"
+	files := ListAllNsps(".", ".nsp")
 
 	// transform paths/files to a url query
 	for i, s := range files {
