@@ -135,7 +135,7 @@ func main() {
 			fmt.Fprintf(w, "Ok")
 		})
 	}
-	writeIndexFile(serverip, port, *basePath)
+	writeWhileWatchIndexFile(serverip, port, *basePath)
 	http.Handle(pathPrefix, handler)
 
 	log.Printf("Listening at %v%v %v...", serverip, port, pathPrefix)

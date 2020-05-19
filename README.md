@@ -12,7 +12,7 @@ docker run --rm -v ${PWD}:/srv/http -p 8043:8043 sbkg0002/nspindexer -serverip 1
 Open Tinfoil, add a `http` enpoint on *serverip*:8043 and restart Tinfoil. All updates/new games should appear.
 
 ## Todo
-- [ ] Auto regenerate whever there is a new file detected.
+- [ ] Auto regenerate whever there is a new file detected. (https://github.com/radovskyb/watcher)
 - [ ] Try not to use a root container
 
 
