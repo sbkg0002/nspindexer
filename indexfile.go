@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/url"
+	"strings"
 )
 
 type NspLinkIndex struct {
@@ -14,15 +15,22 @@ type NspLinkIndex struct {
 }
 
 func writeIndexFile(serverip string, port string, path string) {
-	webpage := "http://" + serverip + port + "/"
+	webpage := "http://" + serverip + port
 	directories := []string{}
 
 	// Generate a list with all files
 	files := ListAllNsps(path+"/", ".nsp")
 
-	// transform paths/files to a url query
+	// transform paths/files to a url query, but without changing the slashes
 	for i, s := range files {
-		files[i] = webpage + url.QueryEscape(s)
+		urlEscapedPath := ""
+		noSlashes := strings.Split(s, "/")
+
+		for _, base := range noSlashes {
+			urlEscapedPath = urlEscapedPath + "/" + url.QueryEscape(base)
+			fmt.Println("urlEscapedPath = " + string(urlEscapedPath))
+		}
+		files[i] = webpage + urlEscapedPath
 	}
 
 	indexFile := NspLinkIndex{
